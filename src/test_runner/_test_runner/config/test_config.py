@@ -18,7 +18,7 @@ class TestsConfig:
     test_files_pattern: List[str] = DEFAULT_TEST_FILES_PATTERN
     test_funcs_pattern: List[str] = DEFAULT_TEST_FUNCS_PATTERN
 
-    enable_print_to_file: bool = True
+    enable_print_to_file: bool = False
     print_file_name: str = 'test_report'
     print_file_format: str = '{name}_{datetime}.txt'
     print_file_datetime: datetime = datetime.now()

@@ -120,7 +120,8 @@ def test_file_formatter_customization(mock_open_obj):
     Should call CustomFileFormatter.format().
     """
 
-    test_config = TestsConfig(file_formatter=CustomFileFormatter())
+    test_config = TestsConfig(enable_print_to_file=True, 
+                              file_formatter=CustomFileFormatter())
 
     logger = init_session_logger(test_config)
     logger.log_session_start()
