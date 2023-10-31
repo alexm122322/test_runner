@@ -6,6 +6,7 @@ from runpy import run_path
 from typing import List, Optional
 from types import FunctionType
 
+from .decorators import EXCEPTION_ATTRIBUTE_NAME
 from .test_cases import TestCases
 from .test_case import TestCase, ModuleTestCase
 from .config.test_config import TestsConfig
@@ -89,7 +90,8 @@ class TestCaseCollector:
         Returns:
             Optional[Exception]: Exception if an exception is expected.
         """
-        return func._exception if hasattr(func, '_exception') else None
+        
+        return func._exception if hasattr(func, EXCEPTION_ATTRIBUTE_NAME) else None
 
     def _is_test_file(self, path: str) -> bool:
         """Check if path is a test file.

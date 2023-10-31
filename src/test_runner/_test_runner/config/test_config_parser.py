@@ -5,10 +5,13 @@ from runpy import run_path
 from typing import List, Dict
 from types import FunctionType
 
+from ..decorators import END_SESSION_ATTRIBUTE_NAME, START_SESSION_ATTRIBUTE_NAME
+
 from .exceptions import UsageError
 from .test_config import TestsConfig
 
 TEST_SETUP_FILE = 'setup.py'
+
 
 class TestConfigParser:
     def __init__(self, test_dir: str) -> None:
@@ -25,7 +28,7 @@ class TestConfigParser:
             members)
         self.session_end_callbacks = self._find_session_end_functions(members)
         self.test_config = self._find_test_config(members)
-        
+
     def _find_test_config(self, members: Dict[str, any]) -> TestsConfig:
         for _, member in members.items():
             if not isinstance(member, TestsConfig):
@@ -33,12 +36,12 @@ class TestConfigParser:
             return member
 
     def _find_session_start_functions(self, members: Dict[str, any]) -> List[FunctionType]:
-        return list(self._find_all_by_attribute('start_session', members))
+        return list(self._find_all_by_attribute(START_SESSION_ATTRIBUTE_NAME, members))
 
     def _find_session_end_functions(self, members: Dict[str, any]) -> List[FunctionType]:
-        return list(self._find_all_by_attribute('end_session', members))
+        return list(self._find_all_by_attribute(END_SESSION_ATTRIBUTE_NAME, members))
 
-    def _find_all_by_attribute(self, attr_name: str, members: Dict[str, any],) -> List[FunctionType]:
+    def _find_all_by_attribute(self, attr_name: str, members: Dict[str, any]) -> List[FunctionType]:
         for _, member in members.items():
             if not isfunction(member):
                 continue
