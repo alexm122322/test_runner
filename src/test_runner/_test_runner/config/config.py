@@ -5,7 +5,7 @@ from ..logger.loggers import SessionLogger, TestsLogger
 from ..logger.init import init_logger
 from ..events.events_handlers import LoggerEventHandler
 from .session import Session
-from .test_config_parser import TestConfigParser
+from .test_setup_parser import TestSetupParser
 from .test_config import TestsConfig
 
 
@@ -13,7 +13,7 @@ class Config:
     def __init__(self, dir_path: Optional[str], test_config: Optional[TestsConfig]):
         self.dir_path = dir_path
         self.events = Events()
-        self.config_test_parser = TestConfigParser(dir_path)
+        self.config_test_parser = TestSetupParser(dir_path)
         if not test_config:
             self.test_config = self.config_test_parser.test_config
         else:
