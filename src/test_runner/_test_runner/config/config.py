@@ -3,7 +3,7 @@ from typing import Optional
 from ..events.events import Events
 from ..logger.loggers import SessionLogger, TestsLogger
 from ..logger.init import init_logger
-from ..events.events_handlers import LoggerEventHandler
+from ..events.events_handlers import SessionLoggerEventHandler
 from .session import Session
 from .test_setup_parser import TestSetupParser
 from .test_config import TestsConfig
@@ -27,7 +27,7 @@ class Config:
             self.test_config.session_logger or SessionLogger(logger))
         self.register_test_results_logger(
             self.test_config.tests_logger or TestsLogger(logger))
-        self.logger_event_handler = LoggerEventHandler(
+        self.logger_event_handler = SessionLoggerEventHandler(
             self.session_logger, self.events)
         
         if self.test_config.pythonpaths:
