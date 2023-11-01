@@ -22,7 +22,8 @@ class Config:
         session: test_runner session.
     """
 
-    def __init__(self, dir_path: Optional[str], test_config: Optional[TestsConfig]):
+    def __init__(self, dir_path: Optional[str],
+                 test_config: Optional[TestsConfig] = None):
         self._setup = TestSetupParser(dir_path).parse()
         self._events = Events()
 
@@ -49,10 +50,8 @@ class Config:
             logger)
         self.test_results_logger = self.test_config.tests_logger or TestsLogger(
             logger)
-        self.logger_event_handler = SessionLoggerEventHandler(
-            self.session_logger, self._events)
-        self.tests_event_handler = TestsEventHandler(
-            self.test_results_logger, self._events)
+        SessionLoggerEventHandler(self.session_logger, self._events)
+        TestsEventHandler(self.test_results_logger, self._events)
 
     def _init_test_config(self, test_config: Optional[TestsConfig]):
         """Initializing user config."""

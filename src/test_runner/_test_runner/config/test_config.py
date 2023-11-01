@@ -13,6 +13,21 @@ DEFAULT_TEST_FUNCS_PATTERN = tuple(['test_.*'])
 
 @dataclass
 class TestsConfig:
+    """User test_runner configuration.
+
+    Attrs:
+        pythonpaths: Python pathes.
+        test_files_pattern: Pattern for finding test files in directory.
+        test_funcs_pattern: Pattern for finding test functions in directory.
+        enable_print_to_file: Enable print report to file.
+        print_file_name: Print file name.
+        print_file_format: Print file format. {name} and {datetime} are necessary.
+        text_formatter: TextFormatter object for castomization logger format.
+        text_formatter: FileFormatter object for castomization file logger format.
+        tests_logger: TestsLogger object for printing castomization.
+        session_logger: SessionLogger object for printing castomization.
+    """
+    
     pythonpaths: List[str] = DEFAULT_PYTHONPATHS
 
     test_files_pattern: List[str] = DEFAULT_TEST_FILES_PATTERN

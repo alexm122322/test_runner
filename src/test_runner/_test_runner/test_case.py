@@ -5,7 +5,7 @@ from typing import Optional, List
 
 @dataclass
 class TestCase:
-    """Data class which collect all information about test function.
+    """Data class which collects all information about test function.
 
     Attributes:
         func: A test function.
@@ -22,7 +22,7 @@ class TestCase:
 
 @dataclass
 class ModuleTestCase:
-    """Data class which collect all information about tests function in module.
+    """Data class which collects all information about test functions in a module.
 
     Attributes:
         file_path: A name of the function.

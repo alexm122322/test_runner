@@ -5,14 +5,13 @@ from .exit_code import ExitCode
 from .config.test_config import TestsConfig
 
 
-
 def run_tests(
     config: TestsConfig,
     dir_path: str,
     collected: FunctionType,
     finished: FunctionType,
 ) -> ExitCode:
-    """Start tests.
+    """Collect and running tests.
 
     Args:
         config: test_runner configuration.
@@ -20,10 +19,10 @@ def run_tests(
     Returns:
         ExitCode: test_runner exit code.
     """
-    
+
     collector = TestCaseCollector(config, dir_path)
     runner = TestCaseRunner()
-    
+
     test_cases = collector.collect()
     collected(test_cases)
     results = runner.run_test_cases(test_cases)
