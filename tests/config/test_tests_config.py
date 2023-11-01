@@ -156,10 +156,12 @@ def test_session_logger_customization(mock_open_obj):
     """Test custom TestsConfig.session_logger.
     Should call CustomSessionLogger.log_session_start().
     """
-
-    test_config = TestsConfig(session_logger=CustomSessionLogger(Logger('')))
+    
+    session_logger = CustomSessionLogger(Logger(''))
+    test_config = TestsConfig(session_logger=session_logger)
 
     config = Config('tests/', test_config)
+    assert session_logger == config.session_logger
     config.session_logger.log_session_start()
     mock_open_obj.assert_called()
 
@@ -214,8 +216,8 @@ def test_default_test_files_funcs_pattern():
 
     _create_test_dir()
     test_config = TestsConfig(pythonpaths=['.', 'tests'])
-    collector = TestCaseCollector(test_config)
-    result = collector.collect(test_dir)
+    collector = TestCaseCollector(test_config, test_dir)
+    result = collector.collect()
     _remove_test_dir()
 
     assert result.count == 1
@@ -231,8 +233,8 @@ def test_customized_test_files_pattern():
     _create_test_dir()
     test_config = TestsConfig(
         pythonpaths=['.', 'tests'], test_files_pattern=['check_.*.py'])
-    collector = TestCaseCollector(test_config)
-    result = collector.collect(test_dir)
+    collector = TestCaseCollector(test_config, test_dir)
+    result = collector.collect()
     _remove_test_dir()
 
     assert result.count == 1
@@ -248,8 +250,8 @@ def test_customized_test_funcs_pattern():
     _create_test_dir()
     test_config = TestsConfig(pythonpaths=['.', 'tests'], test_funcs_pattern=[
                               'test_.*', 'check_.*'])
-    collector = TestCaseCollector(test_config)
-    result = collector.collect(test_dir)
+    collector = TestCaseCollector(test_config, test_dir)
+    result = collector.collect()
     _remove_test_dir()
 
     assert result.count == 1

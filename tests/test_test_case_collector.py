@@ -10,7 +10,7 @@ def _init_test_case_collector() -> TestCaseCollector:
     """Initialize TestCaseCollector by default"""
     
     config = TestsConfig(enable_print_to_file=False)
-    return TestCaseCollector(config)
+    return TestCaseCollector(config, test_dir)
 
 
 def _create_test_dir():
@@ -63,7 +63,7 @@ def test_collector():
     
     _create_test_dir()
     collector = _init_test_case_collector()
-    result = collector.collect(test_dir)
+    result = collector.collect()
     _remove_test_dir()
     
     assert result.count == 2
