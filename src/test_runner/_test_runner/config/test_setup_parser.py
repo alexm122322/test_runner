@@ -28,7 +28,7 @@ class TestSetupParser:
 
     def _parse_setup_file(self):
         """Endpoint to TEST_SETUP_FILE parsing.
-        Try find TEST_SETUP_FILE in the _test_dir.
+        Try to find TEST_SETUP_FILE in the _test_dir.
         If TEST_SETUP_FILE is not exist, configure by default.
 
         Configure by default:

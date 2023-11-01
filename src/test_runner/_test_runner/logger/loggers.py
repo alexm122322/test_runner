@@ -49,7 +49,7 @@ class TestsLogger(BaseLogger):
             info += f'{item.file_path} {len(item.test_cases)} cases \n'
         self.logger.debug(info)
 
-    def log_test_case_results(self, test_results: TestCaseResults):
+    def log_results(self, test_results: TestCaseResults):
         for item in test_results.items:
             args = ColorArgs(green={'test_count': item.test_count,
                                     'passed_count': item.passed_count},

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import datetime, date
+from datetime import datetime
 from typing import Optional, List
 from ..logger.formatters import TextFormatter, FileFormatter
 from ..logger.loggers import TestsLogger, SessionLogger

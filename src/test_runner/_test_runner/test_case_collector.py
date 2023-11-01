@@ -15,27 +15,25 @@ from .config.test_config import TestsConfig
 class TestCaseCollector:
     """Collects all test cases in a directory or file."""
 
-    def __init__(self, config: TestsConfig):
+    def __init__(self, config: TestsConfig, path: str):
         """Initiation of TestCaseCollector.
 
         Args:
             config: System configuration.
+            path: A path to the destination. It should be a directory.
         """
-
+        self._path = path
         self._test_files_patterns = config.test_files_pattern
         self._test_funcs_pattern = config.test_funcs_pattern
 
-    def collect(self, path: str) -> TestCases:
+    def collect(self,) -> TestCases:
         """Collects all test cases in a destination.
-
-        Args:
-            path: A path to the destination. It should be a directory.
 
         Returns:
             TestCases: All test cases in a destination.
         """
 
-        return TestCases(self._collect(path))
+        return TestCases(self._collect(self._path))
 
     def _collect(self, path: str) -> List[ModuleTestCase]:
         """Collects all module test cases in a destination.
