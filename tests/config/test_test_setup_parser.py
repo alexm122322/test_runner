@@ -3,8 +3,8 @@ import os
 from test_runner._test_runner.config.test_setup_parser import TestSetupParser, TEST_SETUP_FILE
 
 from test_runner import TestsConfig
+from tests.consts import TEST_DIR
 
-test_dir = 'test/'
 start_session_name = 'custom_start_session'
 end_session_name = 'custom_end_session'
 config_name = 'test_config'
@@ -17,9 +17,8 @@ def _create_test_dir():
     functions inside files.
     """
 
-    os.mkdir(test_dir)
 
-    with open(f'{test_dir}{TEST_SETUP_FILE}', "w") as f:
+    with open(f'{TEST_DIR}{TEST_SETUP_FILE}', "w") as f:
         f.write(f'''
 from test_runner import TestsConfig, start_session, end_session
 
@@ -38,8 +37,7 @@ def {end_session_name}():
 def _remove_test_dir():
     """Removes TEST_SETUP_FILE, and test dir."""
 
-    os.remove(f'{test_dir}{TEST_SETUP_FILE}')
-    os.rmdir(test_dir)
+    os.remove(f'{TEST_DIR}{TEST_SETUP_FILE}')
 
 
 def test_setup_parser_without_setup_file():
@@ -49,13 +47,11 @@ def test_setup_parser_without_setup_file():
     test_config by default.
     """
 
-    os.mkdir(test_dir)
-    setup = TestSetupParser(test_dir).parse()
+    setup = TestSetupParser(TEST_DIR).parse()
 
     test_config = setup[0]
     start_callbacks = setup[1]
     end_callbacks = setup[2]
-    os.rmdir(test_dir)
     assert not start_callbacks
     assert not end_callbacks
 
@@ -70,7 +66,7 @@ def test_setup_parser_should_parse():
     """
 
     _create_test_dir()
-    setup = TestSetupParser(test_dir).parse()
+    setup = TestSetupParser(TEST_DIR).parse()
     _remove_test_dir()
     test_config = setup[0]
     start_callbacks = setup[1]

@@ -1,6 +1,6 @@
 import os
 
-from datetime import datetime, date
+from datetime import datetime
 from logging import Logger
 from test_runner._test_runner.config.test_config import TestsConfig
 from test_runner._test_runner.config.config import Config
@@ -15,6 +15,8 @@ from test_runner._test_runner.test_case_collector import TestCaseCollector
 from test_runner._test_runner.logger.init import _create_file_name
 
 from unittest.mock import patch, mock_open
+
+from tests.consts import TEST_DIR
 
 
 def init_session_logger(config: TestsConfig) -> SessionLogger:
@@ -166,7 +168,6 @@ def test_session_logger_customization(mock_open_obj):
     mock_open_obj.assert_called()
 
 
-test_dir = 'test/'
 
 
 def _create_test_dir():
@@ -175,9 +176,7 @@ def _create_test_dir():
     functions inside files.
     """
 
-    os.mkdir(test_dir)
-
-    with open(f'{test_dir}test_file.py', "w") as f:
+    with open(f'{TEST_DIR}test_file.py', "w") as f:
         f.write('''
 def test_func1():
     assert 1 == 1
@@ -191,7 +190,7 @@ def check_func():
 def fetch_func():
     assert 3 == 3''')
 
-    with open(f'{test_dir}check_file.py', "w") as f:
+    with open(f'{TEST_DIR}check_file.py', "w") as f:
         f.write('''
 def test_func1():
     assert 1 == 1
@@ -204,9 +203,8 @@ def _remove_test_dir():
     """Removes test_file.py and check_file.py, and test dir.
     """
 
-    os.remove(f'{test_dir}test_file.py')
-    os.remove(f'{test_dir}check_file.py')
-    os.rmdir(test_dir)
+    os.remove(f'{TEST_DIR}test_file.py')
+    os.remove(f'{TEST_DIR}check_file.py')
 
 
 def test_default_test_files_funcs_pattern():
@@ -216,7 +214,7 @@ def test_default_test_files_funcs_pattern():
 
     _create_test_dir()
     test_config = TestsConfig(pythonpaths=['.', 'tests'])
-    collector = TestCaseCollector(test_config, test_dir)
+    collector = TestCaseCollector(test_config, TEST_DIR)
     result = collector.collect()
     _remove_test_dir()
 
@@ -233,7 +231,7 @@ def test_customized_test_files_pattern():
     _create_test_dir()
     test_config = TestsConfig(
         pythonpaths=['.', 'tests'], test_files_pattern=['check_.*.py'])
-    collector = TestCaseCollector(test_config, test_dir)
+    collector = TestCaseCollector(test_config, TEST_DIR)
     result = collector.collect()
     _remove_test_dir()
 
@@ -250,7 +248,7 @@ def test_customized_test_funcs_pattern():
     _create_test_dir()
     test_config = TestsConfig(pythonpaths=['.', 'tests'], test_funcs_pattern=[
                               'test_.*', 'check_.*'])
-    collector = TestCaseCollector(test_config, test_dir)
+    collector = TestCaseCollector(test_config, TEST_DIR)
     result = collector.collect()
     _remove_test_dir()
 

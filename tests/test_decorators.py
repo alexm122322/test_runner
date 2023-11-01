@@ -6,6 +6,7 @@ def test_should_raise_exception():
     The decorator should add EXCEPTION_ATTRIBUTE_NAME attribute.
     The _exception attribute shouldn't exist by default.
     """
+    
     def test_func():
         assert 1 == 1
     
