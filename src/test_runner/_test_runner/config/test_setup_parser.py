@@ -2,7 +2,7 @@ import os
 
 from inspect import isfunction
 from runpy import run_path
-from typing import List, Dict
+from typing import List, Dict, Tuple
 from types import FunctionType
 
 from ..decorators import END_SESSION_ATTRIBUTE_NAME, START_SESSION_ATTRIBUTE_NAME
@@ -24,9 +24,8 @@ class TestSetupParser:
 
     def __init__(self, test_dir: str):
         self._test_dir = test_dir
-        self._parse_setup_file()
 
-    def _parse_setup_file(self):
+    def parse(self) -> Tuple:
         """Endpoint to TEST_SETUP_FILE parsing.
         Try to find TEST_SETUP_FILE in the _test_dir.
         If TEST_SETUP_FILE is not exist, configure by default.
@@ -35,21 +34,22 @@ class TestSetupParser:
             session_start_callbacks: an empty list.
             session_start_callbacks: an empty list.
             self.test_config: TestsConfig without changes.
+
+        Return:
+            Tuple(TestsConfig, List, List): user config, start_callbacks, end_callbacks.
         """
 
         files = [f for f in os.listdir(self._test_dir) if f == TEST_SETUP_FILE]
         if not files:
-            self.session_start_callbacks = []
-            self.session_end_callbacks = []
-            self.test_config = TestsConfig()
-            return
+            return (TestsConfig(), [], [])
 
         setup_file = self._test_dir + files[0]
         members = run_path(setup_file)
-        self.session_start_callbacks = self._find_session_start_functions(
-            members)
-        self.session_end_callbacks = self._find_session_end_functions(members)
-        self.test_config = self._find_test_config(members)
+
+        session_start_callbacks = self._find_session_start_functions(members)
+        session_end_callbacks = self._find_session_end_functions(members)
+        test_config = self._find_test_config(members)
+        return (test_config, session_start_callbacks, session_end_callbacks)
 
     def _find_test_config(self, members: Dict[str, any]) -> TestsConfig:
         """Try to find TestsConfig instanse.

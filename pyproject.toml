@@ -26,3 +26,6 @@ pythonpath = [
 ]
 
 python_classes = []
+
+[pytest]
+mock_use_standalone_module = true

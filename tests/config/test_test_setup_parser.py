@@ -50,13 +50,17 @@ def test_setup_parser_without_setup_file():
     """
 
     os.mkdir(test_dir)
-    parser = TestSetupParser(test_dir)
-    os.rmdir(test_dir)
-    assert not parser.session_end_callbacks
-    assert not parser.session_start_callbacks
+    setup = TestSetupParser(test_dir).parse()
 
-    assert isinstance(parser.test_config, TestsConfig)
-    assert parser.test_config.print_file_name != print_file_name
+    test_config = setup[0]
+    start_callbacks = setup[1]
+    end_callbacks = setup[2]
+    os.rmdir(test_dir)
+    assert not start_callbacks
+    assert not end_callbacks
+
+    assert isinstance(test_config, TestsConfig)
+    assert test_config.print_file_name != print_file_name
 
 
 def test_setup_parser_should_parse():
@@ -66,13 +70,17 @@ def test_setup_parser_should_parse():
     """
 
     _create_test_dir()
-    parser = TestSetupParser(test_dir)
+    setup = TestSetupParser(test_dir).parse()
     _remove_test_dir()
-    assert len(parser.session_end_callbacks) == 1
-    assert len(parser.session_start_callbacks) == 1
+    test_config = setup[0]
+    start_callbacks = setup[1]
+    end_callbacks = setup[2]
 
-    assert parser.session_end_callbacks[0].__name__ == end_session_name
-    assert parser.session_start_callbacks[0].__name__ == start_session_name
+    assert len(start_callbacks) == 1
+    assert len(end_callbacks) == 1
 
-    assert isinstance(parser.test_config, TestsConfig)
-    assert parser.test_config.print_file_name == print_file_name
+    assert start_callbacks[0].__name__ == start_session_name
+    assert end_callbacks[0].__name__ == end_session_name
+
+    assert isinstance(test_config, TestsConfig)
+    assert test_config.print_file_name == print_file_name

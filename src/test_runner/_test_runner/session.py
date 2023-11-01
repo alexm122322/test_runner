@@ -14,13 +14,7 @@ from .config.test_config import TestsConfig
 
 
 class Session:
-    """Session of test runner.
-
-    Attrs:
-        events: The object that triggers events.
-        session_start_callbacks: List of start callbacks.
-        session_end_callbacks: List of end callbacks.
-    """
+    """Session of test_runner. Main Object that regulates test flow."""
 
     def __init__(self,
                  events: Events,
@@ -35,7 +29,7 @@ class Session:
         self._session_end_callbacks = session_end_callbacks
 
     def start(self) -> ExitCode:
-        """Starts session."""
+        """Starts the session."""
 
         self._start()
         exit_code = run_tests(self._config,
@@ -46,9 +40,21 @@ class Session:
         return exit_code
 
     def _collected(self, test_cases: TestCases):
+        """Fires TEST_CASES_COLLECTED event, pass test_cases.
+
+        Args:
+            test_cases: info about collected test cases.
+        """
+
         self._events.fire_event(TEST_CASES_COLLECTED, test_cases)
 
     def _finished(self, results: TestCaseResults):
+        """Fires TEST_CASES_FINISHED event, pass results.
+
+        Args:
+            results: info about test cases running.
+        """
+
         self._events.fire_event(TEST_CASES_FINISHED, results)
 
     def _start(self):
