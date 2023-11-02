@@ -14,10 +14,9 @@ def init_logger(config: TestsConfig, logger_name: str) -> Logger:
     Returns:
         Logger: Configured Logger.
     """
-
     logger = Logger(logger_name, DEBUG)
-    if config.enable_print_to_file:
 
+    if config.enable_print_to_file:
         file_handler = FileHandler(_create_file_name(config))
         file_handler.setFormatter(config.file_formatter)
         logger.addHandler(file_handler)
@@ -31,14 +30,13 @@ def init_logger(config: TestsConfig, logger_name: str) -> Logger:
 def _create_file_name(config: TestsConfig) -> str:
     """Utils function which helps to create a name for recording the file.
     config.print_file_format should contain {datetime} and {name}.
-    
+
     Args:
         config: User test config.
 
     Returns:
         str: Name of file.
     """
-
     datatime_manager = DateTimeManager()
     now_str = datatime_manager.now_str(config.print_file_datetime)
     file_name = str(config.print_file_format)

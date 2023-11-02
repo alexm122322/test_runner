@@ -16,12 +16,6 @@ class TestCaseCollector:
     """Collects all test cases in a directory or file."""
 
     def __init__(self, config: TestsConfig, path: str):
-        """Initiation of TestCaseCollector.
-
-        Args:
-            config: System configuration.
-            path: A path to the destination. It should be a directory.
-        """
         self._path = path
         self._test_files_patterns = config.test_files_pattern
         self._test_funcs_pattern = config.test_funcs_pattern
@@ -32,7 +26,6 @@ class TestCaseCollector:
         Returns:
             TestCases: All test cases in a destination.
         """
-
         return TestCases(self._collect(self._path))
 
     def _collect(self, path: str) -> List[ModuleTestCase]:
@@ -44,7 +37,6 @@ class TestCaseCollector:
         Returns:
             List[ModuleTestCase]: A list of module test cases.
         """
-
         test_cases = []
         if os.path.isdir(path):
             for file in os.listdir(path):
@@ -53,7 +45,7 @@ class TestCaseCollector:
                     test_cases.extend(module_test_case)
         elif os.path.isfile(path):
             module_test_case = self._collect_test_cases_in_file(path)
-            if module_test_case:
+            if module_test_case is not None:
                 test_cases.append(module_test_case)
         test_cases.reverse()
         return test_cases
@@ -67,7 +59,6 @@ class TestCaseCollector:
         Returns:
             List[TestCase]: All test cases at a file.
         """
-
         if not self._is_test_file(path):
             return None
 
@@ -88,7 +79,6 @@ class TestCaseCollector:
         Returns:
             Optional[Exception]: Exception if an exception is expected.
         """
-        
         return func._exception if hasattr(func, EXCEPTION_ATTRIBUTE_NAME) else None
 
     def _is_test_file(self, path: str) -> bool:
@@ -100,7 +90,6 @@ class TestCaseCollector:
         Returns:
             bool: True if file match with the patterns.
         """
-
         filename = path.split('/').pop()
 
         return self._match_pattens(filename, self._test_files_patterns)
@@ -114,9 +103,8 @@ class TestCaseCollector:
 
         Returns:
             bool: True if the member is a function and 
-            is a match to the patterns.
+                is a match to the patterns.
         """
-
         return isfunction(member) and self._match_pattens(name, self._test_funcs_pattern)
 
     def _match_pattens(self, name: str, patterns: List[str]) -> bool:
@@ -129,7 +117,6 @@ class TestCaseCollector:
         Returns:
             bool: True if the name matches with one of the patterns.
         """
-
         for pattern in patterns:
             pattern = re.compile(pattern)
             match = pattern.match(name)

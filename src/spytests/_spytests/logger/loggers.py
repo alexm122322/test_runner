@@ -14,7 +14,6 @@ class BaseLogger:
 
     def _br(self):
         """Print '\n'"""
-
         self.logger.debug('')
 
 
@@ -36,7 +35,6 @@ class SessionLogger(BaseLogger):
         """Prints about the session start.
         Print Information about system, start time.
         """
-
         self.logger.info(
             self.terminal_utils.create_full_str(' SESSION START ', '-'))
         self.logger.debug(get_system_info())
@@ -48,7 +46,6 @@ class SessionLogger(BaseLogger):
         """Prints about the session end.
         Print information about end time and running total time.
         """
-
         self.logger.debug('finish at: {finish_at}', ColorArgs(
             green={'finish_at': self.date_time_manager.finish_at()}))
         self.logger.debug('total time: {total_time}', ColorArgs(
@@ -75,7 +72,6 @@ class TestsLogger(BaseLogger):
         Args:
             test_cases: Collected test cases.
         """
-
         info = f"collect {item_count_str('items', test_cases.count)}: \n\n"
         for item in test_cases.items:
             info += f'{item.file_path} {len(item.test_cases)} cases \n'
@@ -87,7 +83,6 @@ class TestsLogger(BaseLogger):
         Args:
             test_results: Test Results.
         """
-
         for item in test_results.items:
             args = ColorArgs(green={'test_count': item.test_count,
                                     'passed_count': item.passed_count},
@@ -113,7 +108,6 @@ class TestsLogger(BaseLogger):
         Args:
             results: Test results.
         """
-
         for failure in results:
             self._log_failure(failure)
 
@@ -123,13 +117,12 @@ class TestsLogger(BaseLogger):
         Args:
             result: Test result.
         """
-
         self.logger.error(f'"{result.test_case.method_name}" failure: \n')
 
-        if result.exception:
+        if result.exception is not None:
             self.logger.error(f'{type(result.exception)} {result.exception}')
 
-        if result.assertion_error:
+        if result.assertion_error is not None:
             self.logger.error("Assertion Error")
 
         filename, line, func, text = result.stack_summary
@@ -137,7 +130,7 @@ class TestsLogger(BaseLogger):
         self.logger.error(f'{text}')
         self._br()
 
-        if result.test_case.exception:
+        if result.test_case.exception is not None:
             self.logger.warn(f'expected {result.test_case.exception.__name__}')
             self._br()
 
@@ -150,7 +143,6 @@ class TestsLogger(BaseLogger):
         Returns:
             str: Module result logging string.
         """
-
         start = result.module_test_case.file_path
         test_cases_count = item_count_str('case', result.test_count)
         middle = ' {test_count} test ' + test_cases_count

@@ -1,5 +1,6 @@
 import os
 import pytest
+
 from mock import Mock
 from tests.consts import TEST_DIR
 

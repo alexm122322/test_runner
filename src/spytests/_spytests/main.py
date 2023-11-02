@@ -14,12 +14,11 @@ def run_tests(
     """Collect and running tests.
 
     Args:
-        config: test_runner configuration.
+        config: spytests configuration.
 
     Returns:
-        ExitCode: test_runner exit code.
+        ExitCode: spytests exit code.
     """
-
     collector = TestCaseCollector(config, dir_path)
     runner = TestCaseRunner()
 

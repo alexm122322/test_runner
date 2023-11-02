@@ -1,7 +1,8 @@
+from spytests import raise_exception
+
 from spytests._spytests.test_case_runner import TestCaseRunner
 from spytests._spytests.test_case import TestCase, ModuleTestCase
 from spytests._spytests.test_cases import TestCases
-from spytests import should_raise_exception
 
 
 runner = TestCaseRunner()
@@ -9,7 +10,6 @@ runner = TestCaseRunner()
 
 def test_run_passed_test_case():
     """Test the test case which should pass."""
-
     def test_func():
         assert 1 == 1
 
@@ -22,7 +22,6 @@ def test_run_passed_test_case():
 
 def test_run_assertion_test_case():
     """Test the test case which should raise AssertionError."""
-
     def test_func():
         assert 1 == 2
 
@@ -36,7 +35,6 @@ def test_run_assertion_test_case():
 
 def test_run_exception_test_case():
     """Test the test case which should raise Exception."""
-
     def test_func():
         raise Exception
 
@@ -55,7 +53,6 @@ class SpecificException(Exception):
 
 def test_run_specific_exception_test_case():
     """Test the test case which should raise SpecificException."""
-
     def test_func():
         raise SpecificException
 
@@ -73,7 +70,6 @@ def test_run_test_cases():
     TestCaseRunner.run_test_cases should return TestCaseResults
     which should contain all passed and failed test case results.
     """
-
     def test_func1():
         assert 1 == 1
 
@@ -86,11 +82,11 @@ def test_run_test_cases():
     def test_func4():
         raise SpecificException
 
-    @should_raise_exception(SpecificException)
+    @raise_exception(SpecificException)
     def test_func5():
         raise SpecificException
 
-    @should_raise_exception(SpecificException)
+    @raise_exception(SpecificException)
     def test_func6():
         assert 1 == 1
 

@@ -19,7 +19,6 @@ class Events:
         Args:
             func: The function which should add to _callbacks.
         """
-
         if (isinstance(func, (FunctionType, MethodType))):
             self._callbacks.append(func)
 
@@ -29,7 +28,6 @@ class Events:
         Args:
             func: The function which should remove from _callbacks.
         """
-
         if (isinstance(func, (FunctionType, MethodType))):
             self._callbacks.remove(func)
 
@@ -40,7 +38,6 @@ class Events:
         Args:
             event: Event that will be transmitted to the callbacks.
         """
-
         for callback in self._callbacks:
             args_count = len(args) + len(kwargs)
             if callback.__code__.co_varnames and callback.__code__.co_varnames[0] == 'self':

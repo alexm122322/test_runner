@@ -5,13 +5,12 @@ START_SESSION_ATTRIBUTE_NAME = '_start_session'
 END_SESSION_ATTRIBUTE_NAME = '_end_session'
 
 
-def should_raise_exception(exception: type(Exception)):
+def raise_exception(exception: type(Exception)):
     """Decorator which mark function like should raise an exception.
 
     Args:
         exception: The type of exception.
     """
-
     def decorator(func):
         func._exception = exception
 
@@ -29,7 +28,6 @@ def start_session(func):
     Args:
         func (Function): The decorated function.
     """
-
     func._start_session = True
 
     @functools.wraps(func)
@@ -45,7 +43,6 @@ def end_session(func):
     Args:
         func (Function): The decorated function.
     """
-
     func._end_session = True
 
     @functools.wraps(func)

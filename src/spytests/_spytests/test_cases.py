@@ -13,10 +13,5 @@ class TestCases:
     """
 
     def __init__(self, items: List[ModuleTestCase]):
-        """Initializes the instance of TestCases class
-
-        Args:
-            items: A list of TestCase.
-        """
         self.items = items
         self.count = len(items)

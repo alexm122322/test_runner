@@ -14,7 +14,7 @@ class TestCase:
         file_path: The path to the file where the function exists.
         method_name: A name of the function.
     """
-
+    
     func: FunctionType
     exception: Optional[Exception]
     method_name: str
@@ -28,6 +28,6 @@ class ModuleTestCase:
         file_path: A name of the function.
         test_cases: The test cases of a module.
     """
-
+    
     file_path: str
     test_cases: List[TestCase]

@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional, List
-from ..logger import TextFormatter, FileFormatter
-from ..logger import TestsLogger, SessionLogger
+
+from ..logger import TextFormatter, FileFormatter, TestsLogger, SessionLogger
 
 
 DEFAULT_PRINT_PATH = 'print.txt'
@@ -13,7 +13,7 @@ DEFAULT_TEST_FUNCS_PATTERN = tuple(['test_.*'])
 
 @dataclass
 class TestsConfig:
-    """User test_runner configuration.
+    """User spytests configuration.
 
     Attrs:
         pythonpaths: Python pathes.
@@ -27,7 +27,7 @@ class TestsConfig:
         tests_logger: TestsLogger object for printing castomization.
         session_logger: SessionLogger object for printing castomization.
     """
-    
+
     pythonpaths: List[str] = DEFAULT_PYTHONPATHS
 
     test_files_pattern: List[str] = DEFAULT_TEST_FILES_PATTERN

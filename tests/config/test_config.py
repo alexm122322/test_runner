@@ -1,5 +1,5 @@
-from spytests._spytests.config import Config
 from tests.consts import TEST_DIR
+from spytests._spytests.config import Config
 
 
 def test_ensure_session_created():

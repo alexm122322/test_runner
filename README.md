@@ -11,7 +11,7 @@ def test_equals():
 ## How to use
 Run a command:
 
-> test_runner tests/
+> spytests tests/
 
 Where `tests/` is a `target directory`. The plugin collects all files which match with `test_files_pattern`. By default, it searches files that start with `test_`. And collects all methods which match with `test_funcs_pattern`. By default, it searches functions that start with `test_`.
 
@@ -24,7 +24,7 @@ All setups are made in the `setup.py` file that is located inside the `target di
 You are able to add callbacks that call when the session will be started like that:
 
 ```py
-from test_runner import start_session
+from spytests import start_session
 
 @start_session
 def session_start():
@@ -36,7 +36,7 @@ def session_start():
 You are able to add callbacks that call when the session will be ended like that:
 
 ```py
-from test_runner import end_session
+from spytests import end_session
 
 @end_session
 def session_end():
@@ -48,14 +48,14 @@ def session_end():
 You are able to mark some test the function that must raise an Exception like that:
 
 ```py
-from test_runner import should_raise_exception
+from spytests import raise_exception
 
-class CustomException(Exception):
+class CustomError(Exception):
     pass
 
-@should_raise_exception(CustomException)
+@raise_exception(CustomError)
 def session_raise_custom_exception():
-    raise CustomException('Exception for some reason.')
+    raise CustomError('Exception for some reason.')
 ```
 
 ## TestsConfig
@@ -64,7 +64,7 @@ You are able to configure some extra parameters:
 
 ```py
 from datatime import datatime
-from test_runner import TestsConfig, TextFormatter, FileFormatter, TestsLogger, SessionLogger
+from spytests import TestsConfig, TextFormatter, FileFormatter, TestsLogger, SessionLogger
 
 config = TestConfig(
     pythonpaths = ['.', 'src'],

@@ -1,5 +1,6 @@
 import os
 
+
 class TerminalUtils:
     def __init__(self):
         try:

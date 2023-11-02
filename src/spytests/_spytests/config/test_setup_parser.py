@@ -38,7 +38,6 @@ class TestSetupParser:
         Return:
             Tuple(TestsConfig, List, List): user config, start_callbacks, end_callbacks.
         """
-
         files = [f for f in os.listdir(self._test_dir) if f == TEST_SETUP_FILE]
         if not files:
             return (TestsConfig(), [], [])
@@ -61,7 +60,6 @@ class TestSetupParser:
             TestsConfig: TestsConfig instanse from TEST_SETUP_FILE.
              If the instance is not present, return the default TestsConfig.
         """
-
         for _, member in members.items():
             if isinstance(member, TestsConfig):
                 return member
@@ -78,7 +76,6 @@ class TestSetupParser:
         Returns:
             List[FunctionType]: A list of sutable functions.
         """
-
         return list(self._find_all_by_attribute(START_SESSION_ATTRIBUTE_NAME, members))
 
     def _find_session_end_functions(self, members: Dict[str, any]) -> List[FunctionType]:
@@ -91,7 +88,6 @@ class TestSetupParser:
         Returns:
             List[FunctionType]: A list of sutable functions.
         """
-
         return list(self._find_all_by_attribute(END_SESSION_ATTRIBUTE_NAME, members))
 
     def _find_all_by_attribute(self, attr_name: str, members: Dict[str, any]):
@@ -106,7 +102,6 @@ class TestSetupParser:
         Yields:
             FunctionType: A suitable function.
         """
-
         for _, member in members.items():
             if not isfunction(member):
                 continue

@@ -10,7 +10,6 @@ def event_handler(event: str):
     Args:
         event: events.
     """
-
     if event == EVENT1:
         event1()
     elif event == EVENT2:
@@ -37,7 +36,6 @@ def test_add_event_handler(mocker):
 def test_remove_event_handler(mocker):
     """Test Events.remove_callback. 
     Events shouldn't be triggered after event_handler is removed."""
-
     events = Events()
     event1_mock = mocker.patch(f'{__name__}.{event1.__name__}')
     event2_mock = mocker.patch(f'{__name__}.{event2.__name__}')
@@ -54,7 +52,6 @@ def test_remove_event_handler(mocker):
 
 def test_triger_events(mocker):
     """Test Events.fire_event. Events should be triggered."""
-
     events = Events()
     event1_mock = mocker.patch(f'{__name__}.{event1.__name__}')
     event2_mock = mocker.patch(f'{__name__}.{event2.__name__}')

@@ -1,7 +1,7 @@
+from spytests import TestsConfig
+
 from spytests._spytests.session import Session
 from spytests._spytests.events import Events, SESSION_END, SESSION_START
-
-from spytests import TestsConfig
 
 
 def session_start1():
@@ -22,7 +22,6 @@ def session_end2():
 
 def test_start_session_func_call(mocker):
     """Test session called session start function."""
-
     events = Events()
     mocked_session_start = mocker.patch(
         f'{__name__}.{session_start1.__name__}')
@@ -34,7 +33,6 @@ def test_start_session_func_call(mocker):
 
 def test_start_session_funcs_call(mocker):
     """Test session called session start functions."""
-
     events = Events()
     mocked_session_start1 = mocker.patch(
         f'{__name__}.{session_start1.__name__}')
@@ -50,7 +48,6 @@ def test_start_session_funcs_call(mocker):
 
 def test_end_session_func_call(mocker):
     """Test session called session start function."""
-
     events = Events()
     mocked_session_end = mocker.patch(
         f'{__name__}.{session_end1.__name__}')
@@ -62,7 +59,6 @@ def test_end_session_func_call(mocker):
 
 def test_end_session_funcs_call(mocker):
     """Test session called session start functions."""
-
     events = Events()
     mocked_session_end1 = mocker.patch(
         f'{__name__}.{session_end1.__name__}')
@@ -86,7 +82,6 @@ def end_session_event():
 
 def test_fire_start_event(mocker):
     """Test session fire start event."""
-
     events = Events()
     mocker = mocker.patch(f'{__name__}.{start_session_event.__name__}')
 
@@ -102,7 +97,6 @@ def test_fire_start_event(mocker):
 
 def test_fire_end_event(mocker):
     """Test session fire end event."""
-
     events = Events()
     mocker = mocker.patch(f'{__name__}.{end_session_event.__name__}')
 
@@ -114,24 +108,23 @@ def test_fire_end_event(mocker):
     session = Session(events, TestsConfig(), 'test/')
     session.start()
     mocker.assert_called_once()
-    
+
 
 def test_fire_collected_event(mocker):
     """Test session fire end event."""
-
     events = Events()
     mocker = mocker.patch('spytests._spytests.session.Session._collected')
-    
+
     session = Session(events, TestsConfig(), 'test/')
     session.start()
     mocker.assert_called_once()
-    
+
+
 def test_fire_finished_event(mocker):
     """Test session fire end event."""
-
     events = Events()
     mocker = mocker.patch('spytests._spytests.session.Session._finished')
-    
+
     session = Session(events, TestsConfig(), 'test/')
     session.start()
     mocker.assert_called_once()

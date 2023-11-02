@@ -1,6 +1,7 @@
 from typing import List
 from types import FunctionType
 
+from .events import Events
 from .events import SESSION_START, SESSION_END
 from .events import TEST_CASES_COLLECTED, TEST_CASES_FINISHED
 
@@ -9,12 +10,12 @@ from .main import run_tests
 from .exit_code import ExitCode
 from .test_case_results import TestCaseResults
 from .test_cases import TestCases
-from .events import Events
+
 from .config.test_config import TestsConfig
 
 
 class Session:
-    """Session of test_runner. Main Object that regulates test flow."""
+    """Session of spytests. Main Object that regulates test flow."""
 
     def __init__(self,
                  events: Events,
@@ -30,7 +31,6 @@ class Session:
 
     def start(self) -> ExitCode:
         """Starts the session."""
-
         self._start()
         exit_code = run_tests(self._config,
                               self._dir_path,
@@ -45,7 +45,6 @@ class Session:
         Args:
             test_cases: info about collected test cases.
         """
-
         self._events.fire_event(TEST_CASES_COLLECTED, test_cases)
 
     def _finished(self, results: TestCaseResults):
@@ -54,14 +53,12 @@ class Session:
         Args:
             results: info about test cases running.
         """
-
         self._events.fire_event(TEST_CASES_FINISHED, results)
 
     def _start(self):
         """Call all start callbacks. 
         Fire SESSION_START event. 
         """
-
         self._events.fire_event(SESSION_START)
         self._call_all(self._session_start_callbacks)
 
@@ -69,7 +66,6 @@ class Session:
         """Ends session. Call all end callbacks. 
         Fire SESSION_END event. 
         """
-
         self._call_all(self._session_end_callbacks)
         self._events.fire_event(SESSION_END)
 
@@ -79,6 +75,5 @@ class Session:
         Args:
             funcs: Functions which will be called.
         """
-
         for func in funcs:
             func()

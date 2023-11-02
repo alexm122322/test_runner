@@ -19,7 +19,6 @@ class TestCaseRunner:
         Returns:
             TestCaseResults: The test cases result.
         """
-        
         module_results = []
         for module_test_case in test_cases.items:
             passed = []
@@ -41,18 +40,17 @@ class TestCaseRunner:
 
         Args:
             test_case: The test case which need run.
-            
+
         Returns:
             TestCaseResult: The result of the test case.
         """
-        
         try:
             test_case.func()
             return TestCaseResult(test_case=test_case)
         except AssertionError as e:
             _, _, tb = sys.exc_info()
             stack_summary = traceback.extract_tb(tb)[-1]
-            
+
             return TestCaseResult(test_case=test_case,
                                   assertion_error=e,
                                   stack_summary=stack_summary)
@@ -72,8 +70,7 @@ class TestCaseRunner:
         Returns:
             bool: True if test case passed. False if test case failed
         """
-        
-        if result.test_case.exception:
+        if result.test_case.exception is not None:
             return isinstance(result.exception, result.test_case.exception)
         else:
             return not result.exception and not result.assertion_error
