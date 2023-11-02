@@ -1,4 +1,4 @@
-from ..logger.loggers import SessionLogger, TestsLogger
+from ..logger import SessionLogger, TestsLogger
 from .events import Events, SESSION_START, SESSION_END
 from .events import TEST_CASES_COLLECTED, TEST_CASES_FINISHED
 

@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 from logging import Logger
 from simple_test_runner._simple_test_runner.config.test_config import TestsConfig
-from simple_test_runner._simple_test_runner.config.config import Config
+from simple_test_runner._simple_test_runner.config import Config
 
 from simple_test_runner._simple_test_runner.logger.loggers import TestsLogger, SessionLogger
 from simple_test_runner._simple_test_runner.logger.init import init_logger

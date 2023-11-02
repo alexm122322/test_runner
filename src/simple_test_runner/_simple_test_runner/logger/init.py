@@ -2,7 +2,7 @@
 
 from logging import StreamHandler, FileHandler, DEBUG, Logger
 
-from ..utils.date_time_manager import DateTimeManager
+from ..utils import DateTimeManager
 from ..config.test_config import TestsConfig
 
 

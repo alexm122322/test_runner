@@ -1,6 +1,6 @@
 import os
 
-from simple_test_runner._simple_test_runner.config.test_setup_parser import TestSetupParser, TEST_SETUP_FILE
+from simple_test_runner._simple_test_runner.config import TestSetupParser, TEST_SETUP_FILE
 
 from simple_test_runner import TestsConfig
 from tests.consts import TEST_DIR

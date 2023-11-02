@@ -1,8 +1,8 @@
-from simple_test_runner._simple_test_runner.events.events_handlers import SessionLoggerEventHandler, TestsEventHandler
-from simple_test_runner._simple_test_runner.events.events import SESSION_START, SESSION_END, TEST_CASES_COLLECTED, TEST_CASES_FINISHED
+from simple_test_runner._simple_test_runner.events import SessionLoggerEventHandler, TestsEventHandler
+from simple_test_runner._simple_test_runner.events import SESSION_START, SESSION_END, TEST_CASES_COLLECTED, TEST_CASES_FINISHED
 from simple_test_runner._simple_test_runner.logger.loggers import SessionLogger, TestsLogger
 from simple_test_runner._simple_test_runner.logger.init import init_logger
-from simple_test_runner._simple_test_runner.events.events import Events
+from simple_test_runner._simple_test_runner.events import Events
 from simple_test_runner._simple_test_runner.test_cases import TestCases
 from simple_test_runner._simple_test_runner.test_case_results import TestCaseResults
 

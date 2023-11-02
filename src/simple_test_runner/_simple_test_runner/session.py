@@ -1,15 +1,15 @@
 from typing import List
 from types import FunctionType
 
-from .events.events import SESSION_START, SESSION_END
-from .events.events import TEST_CASES_COLLECTED, TEST_CASES_FINISHED
+from .events import SESSION_START, SESSION_END
+from .events import TEST_CASES_COLLECTED, TEST_CASES_FINISHED
 
 from .main import run_tests
 
 from .exit_code import ExitCode
 from .test_case_results import TestCaseResults
 from .test_cases import TestCases
-from .events.events import Events
+from .events import Events
 from .config.test_config import TestsConfig
 
 

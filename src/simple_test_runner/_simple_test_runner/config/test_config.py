@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional, List
-from ..logger.formatters import TextFormatter, FileFormatter
-from ..logger.loggers import TestsLogger, SessionLogger
+from ..logger import TextFormatter, FileFormatter
+from ..logger import TestsLogger, SessionLogger
 
 
 DEFAULT_PRINT_PATH = 'print.txt'

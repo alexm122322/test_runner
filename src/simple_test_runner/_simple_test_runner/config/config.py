@@ -2,11 +2,11 @@ import sys
 
 from typing import Optional
 
-from ..events.events import Events
-from ..events.events_handlers import SessionLoggerEventHandler, TestsEventHandler
+from ..events import Events
+from ..events import SessionLoggerEventHandler, TestsEventHandler
 
-from ..logger.loggers import SessionLogger, TestsLogger
-from ..logger.init import init_logger
+from ..logger import SessionLogger, TestsLogger
+from ..logger import init_logger
 
 from ..session import Session
 

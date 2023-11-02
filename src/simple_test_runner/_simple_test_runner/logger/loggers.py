@@ -4,10 +4,8 @@ from logging import Logger
 from ..test_cases import TestCases
 from ..test_case_result import TestCaseResult
 from ..test_case_results import TestCaseResults
-from ..utils.functions import get_system_info, item_count_str
-from ..utils.terminal_utils import TerminalUtils
+from ..utils import TerminalUtils, DateTimeManager, get_system_info, item_count_str
 from .formatters import ColorArgs
-from ..utils.date_time_manager import DateTimeManager
 
 
 class BaseLogger:

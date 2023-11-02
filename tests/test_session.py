@@ -1,5 +1,5 @@
 from simple_test_runner._simple_test_runner.session import Session
-from simple_test_runner._simple_test_runner.events.events import Events, SESSION_END, SESSION_START
+from simple_test_runner._simple_test_runner.events import Events, SESSION_END, SESSION_START
 
 from simple_test_runner import TestsConfig
 
