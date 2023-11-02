@@ -2,17 +2,17 @@ import os
 
 from datetime import datetime
 from logging import Logger
-from simple_test_runner._simple_test_runner.config.test_config import TestsConfig
-from simple_test_runner._simple_test_runner.config import Config
+from spytests._spytests.config.test_config import TestsConfig
+from spytests._spytests.config import Config
 
-from simple_test_runner._simple_test_runner.logger.loggers import TestsLogger, SessionLogger
-from simple_test_runner._simple_test_runner.logger.init import init_logger
-from simple_test_runner._simple_test_runner.logger.formatters import TextFormatter, FileFormatter
+from spytests._spytests.logger.loggers import TestsLogger, SessionLogger
+from spytests._spytests.logger.init import init_logger
+from spytests._spytests.logger.formatters import TextFormatter, FileFormatter
 
-from simple_test_runner._simple_test_runner.test_cases import TestCases
-from simple_test_runner._simple_test_runner.test_case_collector import TestCaseCollector
+from spytests._spytests.test_cases import TestCases
+from spytests._spytests.test_case_collector import TestCaseCollector
 
-from simple_test_runner._simple_test_runner.logger.init import _create_file_name
+from spytests._spytests.logger.init import _create_file_name
 
 from unittest.mock import patch, mock_open
 

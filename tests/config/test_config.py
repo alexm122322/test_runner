@@ -1,4 +1,4 @@
-from simple_test_runner._simple_test_runner.config import Config
+from spytests._spytests.config import Config
 from tests.consts import TEST_DIR
 
 

@@ -3,7 +3,7 @@ from typing import Optional
 
 
 class DateTimeManager:
-    def __init__(self) -> None:
+    def __init__(self):
         self.start_time = datetime.now()
         self.finish_time = datetime.now()
 

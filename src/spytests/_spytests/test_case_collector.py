@@ -26,7 +26,7 @@ class TestCaseCollector:
         self._test_files_patterns = config.test_files_pattern
         self._test_funcs_pattern = config.test_funcs_pattern
 
-    def collect(self,) -> TestCases:
+    def collect(self) -> TestCases:
         """Collects all test cases in a destination.
 
         Returns:

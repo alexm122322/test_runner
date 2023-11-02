@@ -1,7 +1,7 @@
 import os
 
 class TerminalUtils:
-    def __init__(self) -> None:
+    def __init__(self):
         try:
             self.terminal_width = os.get_terminal_size().columns
         except Exception:
