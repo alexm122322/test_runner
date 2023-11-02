@@ -1,4 +1,4 @@
-from src.test_runner import start_session, end_session, TestsConfig
+from src.simple_test_runner import start_session, end_session, TestsConfig
 
 
 @start_session

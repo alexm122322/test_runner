@@ -1,7 +1,7 @@
-from test_runner._test_runner.session import Session
-from test_runner._test_runner.events.events import Events, SESSION_END, SESSION_START
+from simple_test_runner._simple_test_runner.session import Session
+from simple_test_runner._simple_test_runner.events.events import Events, SESSION_END, SESSION_START
 
-from test_runner import TestsConfig
+from simple_test_runner import TestsConfig
 
 
 def session_start1():
@@ -120,7 +120,7 @@ def test_fire_collected_event(mocker):
     """Test session fire end event."""
 
     events = Events()
-    mocker = mocker.patch('test_runner._test_runner.session.Session._collected')
+    mocker = mocker.patch('simple_test_runner._simple_test_runner.session.Session._collected')
     
     session = Session(events, TestsConfig(), 'test/')
     session.start()
@@ -130,7 +130,7 @@ def test_fire_finished_event(mocker):
     """Test session fire end event."""
 
     events = Events()
-    mocker = mocker.patch('test_runner._test_runner.session.Session._finished')
+    mocker = mocker.patch('simple_test_runner._simple_test_runner.session.Session._finished')
     
     session = Session(events, TestsConfig(), 'test/')
     session.start()

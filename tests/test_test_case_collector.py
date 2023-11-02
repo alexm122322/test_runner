@@ -1,7 +1,7 @@
 import os
 
-from test_runner._test_runner.test_case_collector import TestCaseCollector
-from test_runner import TestsConfig
+from simple_test_runner._simple_test_runner.test_case_collector import TestCaseCollector
+from simple_test_runner import TestsConfig
 from tests.consts import TEST_DIR
 
 
@@ -35,7 +35,7 @@ def fetch_func():
 
     with open(f'{TEST_DIR}test_file1.py', "w") as f:
         f.write('''
-from src.test_runner import should_raise_exception, TestsConfig
+from src.simple_test_runner import should_raise_exception, TestsConfig
 
 
 class CustomException(Exception):

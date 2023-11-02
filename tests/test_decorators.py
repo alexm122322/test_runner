@@ -1,5 +1,5 @@
-from test_runner import should_raise_exception, start_session, end_session
-from test_runner._test_runner.decorators import END_SESSION_ATTRIBUTE_NAME, START_SESSION_ATTRIBUTE_NAME, EXCEPTION_ATTRIBUTE_NAME
+from simple_test_runner import should_raise_exception, start_session, end_session
+from simple_test_runner._simple_test_runner.decorators import END_SESSION_ATTRIBUTE_NAME, START_SESSION_ATTRIBUTE_NAME, EXCEPTION_ATTRIBUTE_NAME
 
 def test_should_raise_exception():
     """Test should_raise_exception decorator.

@@ -1,8 +1,8 @@
 import os
 
-from test_runner._test_runner.config.test_setup_parser import TestSetupParser, TEST_SETUP_FILE
+from simple_test_runner._simple_test_runner.config.test_setup_parser import TestSetupParser, TEST_SETUP_FILE
 
-from test_runner import TestsConfig
+from simple_test_runner import TestsConfig
 from tests.consts import TEST_DIR
 
 start_session_name = 'custom_start_session'
@@ -20,7 +20,7 @@ def _create_test_dir():
 
     with open(f'{TEST_DIR}{TEST_SETUP_FILE}', "w") as f:
         f.write(f'''
-from test_runner import TestsConfig, start_session, end_session
+from simple_test_runner import TestsConfig, start_session, end_session
 
 @start_session
 def {start_session_name}():

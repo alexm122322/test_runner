@@ -1,4 +1,4 @@
-from test_runner._test_runner.events.events import Events
+from simple_test_runner._simple_test_runner.events.events import Events
 
 EVENT1 = 'event1'
 EVENT2 = 'event2'

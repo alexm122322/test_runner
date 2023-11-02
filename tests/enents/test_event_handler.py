@@ -1,12 +1,12 @@
-from test_runner._test_runner.events.events_handlers import SessionLoggerEventHandler, TestsEventHandler
-from test_runner._test_runner.events.events import SESSION_START, SESSION_END, TEST_CASES_COLLECTED, TEST_CASES_FINISHED
-from test_runner._test_runner.logger.loggers import SessionLogger, TestsLogger
-from test_runner._test_runner.logger.init import init_logger
-from test_runner._test_runner.events.events import Events
-from test_runner._test_runner.test_cases import TestCases
-from test_runner._test_runner.test_case_results import TestCaseResults
+from simple_test_runner._simple_test_runner.events.events_handlers import SessionLoggerEventHandler, TestsEventHandler
+from simple_test_runner._simple_test_runner.events.events import SESSION_START, SESSION_END, TEST_CASES_COLLECTED, TEST_CASES_FINISHED
+from simple_test_runner._simple_test_runner.logger.loggers import SessionLogger, TestsLogger
+from simple_test_runner._simple_test_runner.logger.init import init_logger
+from simple_test_runner._simple_test_runner.events.events import Events
+from simple_test_runner._simple_test_runner.test_cases import TestCases
+from simple_test_runner._simple_test_runner.test_case_results import TestCaseResults
 
-from test_runner import TestsConfig
+from simple_test_runner import TestsConfig
 
 
 class CustomSessionLogger(SessionLogger):

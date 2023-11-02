@@ -1,7 +1,7 @@
-from test_runner._test_runner.test_case_runner import TestCaseRunner
-from test_runner._test_runner.test_case import TestCase, ModuleTestCase
-from test_runner._test_runner.test_cases import TestCases
-from test_runner import should_raise_exception
+from simple_test_runner._simple_test_runner.test_case_runner import TestCaseRunner
+from simple_test_runner._simple_test_runner.test_case import TestCase, ModuleTestCase
+from simple_test_runner._simple_test_runner.test_cases import TestCases
+from simple_test_runner import should_raise_exception
 
 
 runner = TestCaseRunner()

@@ -1,4 +1,4 @@
-from src.test_runner import should_raise_exception, main
+from src.simple_test_runner import should_raise_exception, main
 
 
 class CustomException(Exception):

@@ -1,5 +1,5 @@
 import time
-from src.test_runner import should_raise_exception, TestsConfig
+from src.simple_test_runner import should_raise_exception, TestsConfig
 
 
 class CustomException(Exception):
