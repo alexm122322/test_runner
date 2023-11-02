@@ -1,13 +1,13 @@
 import logging
 
-from typing import final
-
+from typing import Dict, Tuple, final
 
 DEFAULT_LOG_FORMAT = "%(message)s"
-DEFAULT_LOG_DATE_FORMAT = "%H:%M:%S"
 
 
 class ColorCodes:
+    """Color codes for terminal. """
+
     grey = "\x1b[38;21m"
     green = "\x1b[1;32m"
     yellow = "\x1b[33;20m"
@@ -21,12 +21,22 @@ class ColorCodes:
 
 @final
 class ColorArgs:
-    def __init__(self,  green: dict = None, red: dict = None):
+    """Argument class which contain args filtered by colors.
+    Supporting collors: green, red
+    """
+
+    def __init__(self, green: dict = None, red: dict = None):
         self.green = green
         self.red = red
 
     @property
     def count(self) -> int:
+        """Counts all colors arguments.
+
+        Returns:
+            int: Count.
+        """
+
         count = 0
         if self.green:
             count += len(self.green)
@@ -35,7 +45,13 @@ class ColorArgs:
         return count
 
     @property
-    def args_dict(self):
+    def args_dict(self) -> Dict:
+        """Convert args to dict. 
+
+        Returns:
+            Dict: Dict of ColorArgs. Format: [name] = tuple(color_code, value)
+        """
+
         result = {}
         if self.green:
             result.update(self._change_dict(self.green, ColorCodes.green))
@@ -44,6 +60,12 @@ class ColorArgs:
         return result
 
     def _change_dict(self, color_args: dict, color: str):
+        """Util funct wich help convert args to dict.
+
+        Returns:
+            Dict: Dict of ColorArgs. Format: [name] = tuple(color_code, value)
+        """
+
         result = {}
         for name, value in color_args.items():
             result[name] = (color, value)
@@ -51,26 +73,53 @@ class ColorArgs:
 
 
 class BaseFormatter(logging.Formatter):
+    """Base implementation of logging Formatter. """
+
     def format(self, record):
         self.rewrite_record(record, False)
         return super().format(record)
-    
-    def rewrite_record(self, record: logging.LogRecord, past_color: bool = False):
+
+    def rewrite_record(self, record: logging.LogRecord, put_color: bool = False):
+        """Rewriting records. Detects ColorArgs and reformats a record.
+        Changing Record.
+
+        Args:
+            record: Log Record.
+            put_color: Need to put collor to record. True if needed.
+        """
+
         msg = record.msg
         if not self._is_brace_format_style(record):
             return
 
-        # add ANSI escape code for next alternating color before each formatting parameter
-        # and reset color after it.
         if self._is_color_args(record.args):
-            fixed = self._fix_color_args(msg, record.args[0], past_color)
+            fixed = self._fix_color_args(msg, record.args[0], put_color)
             record.msg = fixed[0].format(*fixed[1])
             record.args = ()
 
     def _is_color_args(self, args) -> bool:
+        """Detect if arguments contain ColorArgs.
+
+        Args:
+            args: Arguments of record.
+        Return: 
+            bool: True if args contains ColorArgs.
+        """
+
         return len(args) == 1 and isinstance(args[0], ColorArgs)
 
-    def _fix_color_args(self, msg: str, args: ColorArgs, past_color: bool):
+    def _fix_color_args(self, msg: str, args: ColorArgs, put_color: bool) -> Tuple:
+        """Fixes message and arguments.
+
+        Args:
+            msg: Message in Record.
+            args: Color arguments.
+            put_color: Need or not put colors wrappers. True if needed. 
+
+        Returns:
+            Tuple (Message, (List)): fixed meaasge and arguments.
+        """
+
         args = args.args_dict
         msg = str(msg)
         fixed_args = []
@@ -86,7 +135,7 @@ class BaseFormatter(logging.Formatter):
             start_index = msg.index("_{{")
             end_index = msg.index("_}}")
             name = msg[start_index + 3: end_index]
-            if past_color:
+            if put_color:
                 msg = msg.replace("_{{" + name, args[name][0] + "{", 1)
                 msg = msg.replace("_}}", "}" + ColorCodes.reset, 1)
             else:
@@ -98,6 +147,15 @@ class BaseFormatter(logging.Formatter):
         return (msg, tuple(fixed_args))
 
     def _is_brace_format_style(self, record: logging.LogRecord) -> bool:
+        """Check if contains brace arguments. Example: `{arg}`.
+
+        Args:
+            record: Log record.
+
+        Return:
+            bool: True if contain.
+        """
+
         if len(record.args) == 0:
             return False
 
@@ -118,8 +176,12 @@ class BaseFormatter(logging.Formatter):
 
 
 class TextFormatter(BaseFormatter):
-    arg_colors = [ColorCodes.red, ColorCodes.light_blue]
-    level_fields = ["levelname", "levelno"]
+    """Implementation of color text Formatter.
+
+    Args:
+        level_to_formatter: Mapping level to formatter.
+    """
+
     level_to_color = {
         logging.DEBUG: ColorCodes.grey,
         logging.INFO: ColorCodes.green,
@@ -128,14 +190,9 @@ class TextFormatter(BaseFormatter):
         logging.CRITICAL: ColorCodes.bold_red,
     }
 
-    colors = {
-        'green': ColorCodes.green,
-        'red': ColorCodes.red,
-    }
-
     def __init__(self):
         super().__init__()
-        self.level_to_formatter = {}
+        self.level_to_formatter: Dict[int, str] = {}
 
         def add_color_format(level: int):
             color = TextFormatter.level_to_color[level]
@@ -149,7 +206,16 @@ class TextFormatter(BaseFormatter):
         add_color_format(logging.ERROR)
         add_color_format(logging.CRITICAL)
 
-    def format(self, record):
+    def format(self, record) -> str:
+        """Format message.
+
+        Args:
+            record: Formatting record.
+
+        Returns:
+            str: Formatted message.
+        """
+
         orig_msg = record.msg
         orig_args = record.args
         formatter = self.level_to_formatter.get(record.levelno)
@@ -161,4 +227,5 @@ class TextFormatter(BaseFormatter):
 
 
 class FileFormatter(BaseFormatter):
+    """Default implementation of BaseFormatter for File"""
     pass
