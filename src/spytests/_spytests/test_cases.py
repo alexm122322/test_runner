@@ -1,9 +1,10 @@
-from typing import List, final
+from dataclasses import dataclass
+from typing import List
 
 from .test_case import ModuleTestCase
 
 
-@final
+@dataclass
 class TestCases:
     """Data class which collects all TestCases.
 
@@ -11,7 +12,8 @@ class TestCases:
         items: A list of TestCase.
         count: Count of test cases.
     """
+    items: List[ModuleTestCase]
 
-    def __init__(self, items: List[ModuleTestCase]):
-        self.items = items
-        self.count = len(items)
+    @property
+    def count(self):
+        return len(self.items)

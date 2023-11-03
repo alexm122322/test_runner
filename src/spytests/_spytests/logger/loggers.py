@@ -147,7 +147,7 @@ class TestsLogger(BaseLogger):
                 self.logger.error('Actual:')
                 print_failure(result)
             else:
-                self.logger.warn('Actual: no exception!')
+                self.logger.warning('Actual: no exception!')
         else:
             print_failure(result)
             
