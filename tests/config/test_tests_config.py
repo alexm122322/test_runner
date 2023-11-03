@@ -45,6 +45,7 @@ def test_should_print_to_file():
     with open(print_file, "r") as f:
         file_data = f.read()
         assert file_data != ""
+    os.remove(print_file)
 
 
 def test_not_should_print_to_file():
@@ -90,16 +91,17 @@ class CustomTextFormatter(TextFormatter):
         return super().format(record)
 
 
-@patch(f"{__name__}.{CustomTextFormatter.__name__}.format", new_callable=mock_open, read_data="data")
-def test_text_formatter_castomization(mock_open_obj):
+def test_text_formatter_castomization(mocker):
     """Test custom TestsConfig.text_formatter.
     Should call TextFormatterChild.format().
     """
+    mock = mocker.patch(f'{__name__}.{CustomTextFormatter.__name__}.format')
+    mock.side_effect = 'some text'
     test_config = TestsConfig(text_formatter=CustomTextFormatter())
 
     logger = init_session_logger(test_config)
     logger.log_session_start()
-    mock_open_obj.assert_called()
+    mock.assert_called()
 
 
 class CustomFileFormatter(FileFormatter):
@@ -109,17 +111,19 @@ class CustomFileFormatter(FileFormatter):
         return super().format(record)
 
 
-@patch(f"{__name__}.{CustomFileFormatter.__name__}.format", new_callable=mock_open, read_data="data")
-def test_file_formatter_customization(mock_open_obj):
+def test_file_formatter_customization(mocker):
     """Test custom TestsConfig.file_formatter.
     Should call CustomFileFormatter.format().
     """
+    mock = mocker.patch(f'{__name__}.{CustomFileFormatter.__name__}.format')
+    mock.side_effect = 'some text'
     test_config = TestsConfig(enable_print_to_file=True,
                               file_formatter=CustomFileFormatter())
-
+    print_file = _create_file_name(test_config)
     logger = init_session_logger(test_config)
     logger.log_session_start()
-    mock_open_obj.assert_called()
+    mock.assert_called()
+    os.remove(print_file)
 
 
 class CustomTestsLogger(TestsLogger):
@@ -127,16 +131,16 @@ class CustomTestsLogger(TestsLogger):
     pass
 
 
-@patch(f"{__name__}.{CustomTestsLogger.__name__}.log_test_cases_info", new_callable=mock_open, read_data="data")
-def test_tests_logger_castomization(mock_open_obj):
+def test_tests_logger_castomization(mocker):
     """Test custom TestsConfig.tests_logger.
     Should call CustomTestsLogger.log_test_cases_info().
     """
+    mock = mocker.patch(f'{__name__}.{CustomTestsLogger.__name__}.log_test_cases_info')
     test_config = TestsConfig(tests_logger=CustomTestsLogger(Logger('')))
 
     config = Config('tests/', test_config)
     config.test_results_logger.log_test_cases_info(TestCases([]))
-    mock_open_obj.assert_called()
+    mock.assert_called()
 
 
 class CustomSessionLogger(SessionLogger):
@@ -144,18 +148,19 @@ class CustomSessionLogger(SessionLogger):
     pass
 
 
-@patch(f"{__name__}.{CustomSessionLogger.__name__}.log_session_start", new_callable=mock_open, read_data="data")
-def test_session_logger_customization(mock_open_obj):
+def test_session_logger_customization(mocker):
     """Test custom TestsConfig.session_logger.
     Should call CustomSessionLogger.log_session_start().
     """
+    mock = mocker.patch(f'{__name__}.{CustomSessionLogger.__name__}.log_session_start')
+    mock.side_effect = 'some text'
     session_logger = CustomSessionLogger(Logger(''))
     test_config = TestsConfig(session_logger=session_logger)
 
     config = Config('tests/', test_config)
     assert session_logger == config.session_logger
     config.session_logger.log_session_start()
-    mock_open_obj.assert_called()
+    mock.assert_called()
 
 
 def _create_test_dir():
