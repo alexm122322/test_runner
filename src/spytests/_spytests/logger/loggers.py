@@ -74,7 +74,9 @@ class TestsLogger(BaseLogger):
         """
         info = f"collect {item_count_str('items', test_cases.count)}: \n\n"
         for item in test_cases.items:
-            info += f'{item.file_path} {len(item.test_cases)} cases \n'
+            info += f"{item.file_path} {len(item.test_cases)} {item_count_str('case', item.test_cases)}"
+            self._br()
+            
         self.logger.debug(info)
 
     def log_results(self, test_results: TestCaseResults):
@@ -117,24 +119,31 @@ class TestsLogger(BaseLogger):
         Args:
             result: Test result.
         """
+        def print_failure(result: TestCaseResult):
+            if result.exception is not None:
+                self.logger.error(f'{type(result.exception)} {result.exception}')
+
+            if result.assertion_error is not None:
+                self.logger.error("Assertion Error")
+                
+            if result.stack_summary is not None:
+                filename, line, func, text = result.stack_summary
+                self.logger.error(f'{filename}, line {line} in {func}')
+                self.logger.error(f'{text}')
+                self._br()
+                
         self.logger.error(f'"{result.test_case.method_name}" failure: \n')
-
-        if result.exception is not None:
-            self.logger.error(f'{type(result.exception)} {result.exception}')
-
-        if result.assertion_error is not None:
-            self.logger.error("Assertion Error")
-
-        if (result.test_case.exception is not None and
-                result.stack_summary is not None):
-            filename, line, func, text = result.stack_summary
-            self.logger.error(f'{filename}, line {line} in {func}')
-            self.logger.error(f'{text}')
-            self._br()
+        error = result.exception or result.assertion_error
 
         if result.test_case.exception is not None:
-            self.logger.warning(f'expected {result.test_case.exception.__name__}')
-            self._br()
+            self.logger.warning(f'Expected {result.test_case.exception.__name__}')
+            if error is not None:
+                self.logger.error('Actual:')
+                print_failure(result)
+            else:
+                self.logger.warn('Actual: no exception!')
+        else:
+            print_failure(result)
 
     def _module_result_str(self, result: ModuleTestCaseResult) -> str:
         """Creates str for module result logging.
