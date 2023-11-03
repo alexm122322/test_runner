@@ -216,5 +216,25 @@ class TextFormatter(BaseFormatter):
 
 
 class FileFormatter(BaseFormatter):
-    """Default implementation of BaseFormatter for File"""
-    pass
+    """Default implementation of FileFormatter for File"""
+    
+    _colors = [ColorCodes.green, ColorCodes.red]
+    
+    def format(self, record):
+        """Removes all colors from message. Colors were added by TextFormatter.
+
+        Args:
+            record: Record.
+
+        Returns:
+            str: Clear from color text.
+        """
+        return self._remove_colors_in_message(record.message)
+    
+    def _remove_colors_in_message(self, message: str):
+        for color in self._colors:
+            if color in message:
+                message = message.replace(color, '')
+        
+        message = message.replace(ColorCodes.reset, '')
+        return message
