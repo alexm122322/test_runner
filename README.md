@@ -1,4 +1,4 @@
-# Test runner
+# spytests
 A python plugin for running and reporting tests. The plugin collects, runs, and reports about all simple tests in the directory. 
 
 ### Simple test example
