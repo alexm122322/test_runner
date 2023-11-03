@@ -72,12 +72,17 @@ class TestsLogger(BaseLogger):
         Args:
             test_cases: Collected test cases.
         """
-        info = f"collect {item_count_str('items', test_cases.count)}: \n\n"
-        for item in test_cases.items:
-            info += f"{item.file_path} {len(item.test_cases)} {item_count_str('case', item.test_cases)}"
-            self._br()
-            
-        self.logger.debug(info)
+        info = f"Collected {item_count_str('item', test_cases.count)}: \n\n"
+        args = {}
+        for i, item in enumerate(test_cases.items):
+            arg_name = f'item_{i}'
+            arg_part = '{' + f'{arg_name}' + '}'
+            test_cases
+            info += f"{item.file_path} {arg_part} {item_count_str('case', item.count)} \n"
+            args[f'item_{i}'] = item.count
+        self._br()
+        args = ColorArgs(green=args)
+        self.logger.debug(info, args)
 
     def log_results(self, test_results: TestCaseResults):
         """Prints info about test results.
@@ -132,7 +137,8 @@ class TestsLogger(BaseLogger):
                 self.logger.error(f'{text}')
                 self._br()
                 
-        self.logger.error(f'"{result.test_case.method_name}" failure: \n')
+        self.logger.error(f'"{result.test_case.method_name}" failure:')
+
         error = result.exception or result.assertion_error
 
         if result.test_case.exception is not None:
@@ -144,6 +150,9 @@ class TestsLogger(BaseLogger):
                 self.logger.warn('Actual: no exception!')
         else:
             print_failure(result)
+            
+        self._br()
+        self._br()
 
     def _module_result_str(self, result: ModuleTestCaseResult) -> str:
         """Creates str for module result logging.

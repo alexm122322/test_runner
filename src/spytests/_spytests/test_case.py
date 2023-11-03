@@ -31,3 +31,7 @@ class ModuleTestCase:
     
     file_path: str
     test_cases: List[TestCase]
+    
+    @property
+    def count(self):
+        return len(self.test_cases)
