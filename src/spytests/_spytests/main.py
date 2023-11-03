@@ -26,5 +26,4 @@ def run_tests(
     collected(test_cases)
     results = runner.run_test_cases(test_cases)
     finished(results)
-
     return ExitCode.OK if results.all_passed else ExitCode.TESTS_FAILED

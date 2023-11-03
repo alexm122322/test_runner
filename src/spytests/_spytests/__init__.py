@@ -1,4 +1,5 @@
 import os
+import logging
 from typing import List, Optional, Union
 
 from .config import main as config_main
@@ -24,5 +25,7 @@ def main(
         return config.session.start()
     except KeyboardInterrupt:
         return ExitCode.INTERRUPTED
-    except Exception:
+    except Exception as e:
+        logger = logging.getLogger()
+        logger.error(f"Internal Error '{e}'", stack_info=True)
         return ExitCode.INTERNAL_ERROR

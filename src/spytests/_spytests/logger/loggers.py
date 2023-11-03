@@ -88,17 +88,17 @@ class TestsLogger(BaseLogger):
                                     'passed_count': item.passed_count},
                              red={'failure_count': item.failure_count})
 
-            self.logger.debug(self._module_result_str(test_results), args)
+            self.logger.debug(self._module_result_str(item), args)
 
         self.logger.debug('\n')
 
         for item in test_results.items:
             file_path = item.module_test_case.file_path
             if item.failure_results:
-                self.logger.warn(self.terminal_utils.create_full_str(
+                self.logger.warning(self.terminal_utils.create_full_str(
                     f' {file_path} tests failures ', '='))
                 self._log_failures(item.failure_results)
-                self.logger.warn(self.terminal_utils.create_full_str(
+                self.logger.warning(self.terminal_utils.create_full_str(
                     f' {file_path} tests failures end ', '='))
                 self.logger.debug('\n')
 
@@ -125,16 +125,18 @@ class TestsLogger(BaseLogger):
         if result.assertion_error is not None:
             self.logger.error("Assertion Error")
 
-        filename, line, func, text = result.stack_summary
-        self.logger.error(f'{filename}, line {line} in {func}')
-        self.logger.error(f'{text}')
-        self._br()
-
-        if result.test_case.exception is not None:
-            self.logger.warn(f'expected {result.test_case.exception.__name__}')
+        if (result.test_case.exception is not None and
+                result.stack_summary is not None):
+            filename, line, func, text = result.stack_summary
+            self.logger.error(f'{filename}, line {line} in {func}')
+            self.logger.error(f'{text}')
             self._br()
 
-    def _module_result_str(result: ModuleTestCaseResult) -> str:
+        if result.test_case.exception is not None:
+            self.logger.warning(f'expected {result.test_case.exception.__name__}')
+            self._br()
+
+    def _module_result_str(self, result: ModuleTestCaseResult) -> str:
         """Creates str for module result logging.
 
         Args:
